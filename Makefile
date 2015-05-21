@@ -4,7 +4,12 @@ mandir=$(prefix)/share/man
 
 VERSION=0.9.1
 
-CFLAGS=-std=gnu99 -Os -Wall -pedantic -Werror -Wextra -Wshadow
+CROSS_COMPILE ?= arm-cdcs-linux-gnueabi-
+CC:=$(CROSS_COMPILE)gcc
+LD:=$(CROSS_COMPILE)ld
+STRIP:=$(CROSS_COMPILE)strip
+
+CFLAGS=-std=gnu99 -Os -Wall -pedantic -Wextra -Wshadow
 CFLAGS+=-Wstrict-prototypes -Wunreachable-code -Waggregate-return
 LDFLAGS=-s
 
@@ -25,11 +30,10 @@ dist: clean doc
 	@rm -rf going-${VERSION}
 
 install: all
-	@install -d $(DESTDIR)$(bindir)
-	@install going $(DESTDIR)$(bindir)/
-	@install -d $(DESTDIR)$(mandir)/man{8,5}
-	@install man/going.8 $(DESTDIR)$(mandir)/man8/going.8
-	@install man/going.5 $(DESTDIR)$(mandir)/man5/going.5
+	@install -d $(INSTALLDIR)$(bindir)
+	@install going $(INSTALLDIR)$(bindir)/
+	mkdir -p $(INSTALLDIR)/CONTROL
+	cp control postinst $(INSTALLDIR)/CONTROL/
 
 uninstall:
 	@rm -f $(DESTDIR)$(bindir)/going $(DESTDIR)$(mandir)/man[85]/going.[85]

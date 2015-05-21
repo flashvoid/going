@@ -1,0 +1,7 @@
+Package: going
+Priority: optional
+Section: Misc
+Version: 0.9.1
+Architecture: arm
+Maintainer: stas.kraev@digitaldialogue.com.au
+Description: going

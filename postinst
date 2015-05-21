@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+
+mkdir -p /etc/going.d
+echo '::respawn:/usr/sbin/going' >> /etc/inittab
+/sbin/init -q
